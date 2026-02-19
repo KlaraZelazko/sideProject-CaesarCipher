@@ -13,12 +13,18 @@ namespace CaesarCipher
       char[] msgArray = secretMessage.ToCharArray();
       char[] encryptedMessage = new char[msgArray.Length];
       
-      int shift = 3;
+      Console.Write("Enter shift value: ");
+      int shift = int.Parse(Console.ReadLine());
+
       for(int i = 0; i < secretMessage.Length; i++){
-        char currentChar = secretMessage[i];
+        char currentChar =  msgArray[i];
         char lowerChar = char.ToLower(currentChar);
 
         int index = Array.IndexOf(alphabet, lowerChar);
+        if (index == -1){
+          encryptedMessage[i] = currentChar;
+          continue;
+        }
         int shiftedIndex = (index + shift) % 26;
         char encryptedChar = alphabet[shiftedIndex];
         encryptedMessage[i] = encryptedChar;
