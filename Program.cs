@@ -1,36 +1,55 @@
-using System;
-namespace CaesarCipher
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+app.MapPost("/encrypt", (CipherRequest request) =>
 {
-  class Program
-  {
-    static void Main(string[] args)
+    var service = new CaesarService();
+    var result = service.Encrypt(request.Message, request.Shift);
+    return Results.Ok(result);
+});
+
+app.MapFallbackToFile("index.html");
+
+app.Run();
+
+
+// -------- DTO --------
+public class CipherRequest
+{
+    public string Message { get; set; } = "";
+    public int Shift { get; set; }
+}
+
+
+// -------- LOGIKA --------
+public class CaesarService
+{
+    private char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+
+    public string Encrypt(string message, int shift)
     {
-      char[] alphabet = new char[] {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+        char[] msgArray = message.ToCharArray();
+        char[] encryptedMessage = new char[msgArray.Length];
 
-      Console.WriteLine("Write your secret message:");
-      string secretMessage = Console.ReadLine();
-      
-      char[] msgArray = secretMessage.ToCharArray();
-      char[] encryptedMessage = new char[msgArray.Length];
-      
-      Console.Write("Enter shift value: ");
-      int shift = int.Parse(Console.ReadLine());
+        for (int i = 0; i < msgArray.Length; i++)
+        {
+            char currentChar = msgArray[i];
+            char lowerChar = char.ToLower(currentChar);
 
-      for(int i = 0; i < secretMessage.Length; i++){
-        char currentChar =  msgArray[i];
-        char lowerChar = char.ToLower(currentChar);
+            int index = Array.IndexOf(alphabet, lowerChar);
+            if (index == -1)
+            {
+                encryptedMessage[i] = currentChar;
+                continue;
+            }
 
-        int index = Array.IndexOf(alphabet, lowerChar);
-        if (index == -1){
-          encryptedMessage[i] = currentChar;
-          continue;
+            int shiftedIndex = (index + shift) % 26;
+            encryptedMessage[i] = alphabet[shiftedIndex];
         }
-        int shiftedIndex = (index + shift) % 26;
-        char encryptedChar = alphabet[shiftedIndex];
-        encryptedMessage[i] = encryptedChar;
-      }
-      string encryptedString = String.Join("", encryptedMessage);
-      Console.WriteLine("Encrypted message: " + encryptedString);
+
+        return new string(encryptedMessage);
     }
-  }
 }

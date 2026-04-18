@@ -1,0 +1,17 @@
+body {
+  font-family: Arial;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#wheel {
+  font-size: 50px;
+  margin: 20px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+input, button {
+  margin: 5px;
+  padding: 8px;
+}
