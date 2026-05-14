@@ -16,7 +16,7 @@ app.MapFallbackToFile("index.html");
 app.Run();
 
 
-// -------- DTO --------
+//dto
 public class CipherRequest
 {
     public string Message { get; set; } = "";
@@ -24,7 +24,7 @@ public class CipherRequest
 }
 
 
-// -------- LOGIKA --------
+//logika
 public class CaesarService
 {
     private char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
