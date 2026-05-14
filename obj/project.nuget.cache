@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "YHluhzeDIwY=",
+=======
+  "dgSpecHash": "1r4IW7fhyTw=",
+>>>>>>> 26c62badcc1b51306e59dc18acd7f56d5559581e
   "success": true,
   "projectFilePath": "C:\\Users\\krakow\\Documents\\GitHub\\sideProject-CaesarCipher\\sideProject-CaesarCipher.csproj",
   "expectedPackageFiles": [],

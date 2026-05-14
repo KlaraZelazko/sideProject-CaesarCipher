@@ -16,7 +16,11 @@ app.MapFallbackToFile("index.html");
 app.Run();
 
 
+<<<<<<< HEAD
 //dto
+=======
+// -------- DTO --------
+>>>>>>> 26c62badcc1b51306e59dc18acd7f56d5559581e
 public class CipherRequest
 {
     public string Message { get; set; } = "";
@@ -24,11 +28,16 @@ public class CipherRequest
 }
 
 
+<<<<<<< HEAD
 //logika
+=======
+// -------- LOGIKA --------
+>>>>>>> 26c62badcc1b51306e59dc18acd7f56d5559581e
 public class CaesarService
 {
     private char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
+<<<<<<< HEAD
    public string Encrypt(string message, int shift)
 {
     char[] msgArray = message.ToCharArray();
@@ -55,4 +64,29 @@ public class CaesarService
 
     return new string(encryptedMessage);
 }
+=======
+    public string Encrypt(string message, int shift)
+    {
+        char[] msgArray = message.ToCharArray();
+        char[] encryptedMessage = new char[msgArray.Length];
+
+        for (int i = 0; i < msgArray.Length; i++)
+        {
+            char currentChar = msgArray[i];
+            char lowerChar = char.ToLower(currentChar);
+
+            int index = Array.IndexOf(alphabet, lowerChar);
+            if (index == -1)
+            {
+                encryptedMessage[i] = currentChar;
+                continue;
+            }
+
+            int shiftedIndex = (index + shift) % 26;
+            encryptedMessage[i] = alphabet[shiftedIndex];
+        }
+
+        return new string(encryptedMessage);
+    }
+>>>>>>> 26c62badcc1b51306e59dc18acd7f56d5559581e
 }
