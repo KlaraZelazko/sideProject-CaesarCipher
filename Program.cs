@@ -29,27 +29,30 @@ public class CaesarService
 {
     private char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
-    public string Encrypt(string message, int shift)
+   public string Encrypt(string message, int shift)
+{
+    char[] msgArray = message.ToCharArray();
+    char[] encryptedMessage = new char[msgArray.Length];
+
+    for (int i = 0; i < msgArray.Length; i++)
     {
-        char[] msgArray = message.ToCharArray();
-        char[] encryptedMessage = new char[msgArray.Length];
+        char currentChar = msgArray[i];
+        char lowerChar = char.ToLower(currentChar);
 
-        for (int i = 0; i < msgArray.Length; i++)
+        int index = Array.IndexOf(alphabet, lowerChar);
+        if (index == -1)
         {
-            char currentChar = msgArray[i];
-            char lowerChar = char.ToLower(currentChar);
-
-            int index = Array.IndexOf(alphabet, lowerChar);
-            if (index == -1)
-            {
-                encryptedMessage[i] = currentChar;
-                continue;
-            }
-
-            int shiftedIndex = (index + shift) % 26;
-            encryptedMessage[i] = alphabet[shiftedIndex];
+            encryptedMessage[i] = currentChar;
+            continue;
         }
 
-        return new string(encryptedMessage);
+        int shiftedIndex = ((index + shift) % 26 + 26) % 26; // fix 1
+        char encryptedChar = alphabet[shiftedIndex];
+        encryptedMessage[i] = char.IsUpper(currentChar)      // fix 2
+            ? char.ToUpper(encryptedChar)
+            : encryptedChar;
     }
+
+    return new string(encryptedMessage);
+}
 }
